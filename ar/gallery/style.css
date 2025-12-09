@@ -1,5 +1,4 @@
 :root {
-    /* Color Variables from main style.css */
     --primary-color: #6a11cb;
     --secondary-color: #2575fc;
     --accent-color: #00bcd4;
@@ -15,7 +14,6 @@
 }
 
 body.dark-mode {
-    /* Dark Mode Variables from main style.css */
     --text-color: #f0f4f7;
     --background-light: #1e1e2e;
     --background-dark: #121212;
@@ -25,7 +23,12 @@ body.dark-mode {
     --glass-shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* Base Styles (Header, Nav, Body remain unchanged) */
+/* RTL Global Styles */
+body {
+    direction: rtl;
+}
+
+
 ::-webkit-scrollbar{
     display: none;
 }
@@ -127,7 +130,7 @@ body {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
-    margin: 0 25px;
+    margin: 0 25px; /* RTL Note: margin-left and margin-right are symmetric */
     transition: color var(--transition-speed);
     position: relative;
 }
@@ -136,8 +139,7 @@ body {
     content: '';
     position: absolute;
     bottom: -5px;
-    right: 0; /* Changed for RTL */
-    left: auto; /* Changed for RTL */
+    right: 0; /* RTL Adjustment: Start from right */
     width: 0;
     height: 2px;
     background: var(--primary-color);
@@ -187,22 +189,22 @@ body.dark-mode .section-header p {
     color: #aaa;
 }
 
-/* --- Videos Page Specific Styles --- */
+/* --- Images Page Specific Styles --- */
 
-.video-lessons-container {
+.image-lessons-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 80px; /* Space between each lesson block */
+    gap: 80px; 
 }
 
-.video-lesson {
+.image-lesson {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns for text and video */
+    grid-template-columns: 1fr 1fr; 
     gap: 40px;
     align-items: center;
-    text-align: right; /* Default text alignment for RTL */
+    text-align: right; /* RTL Adjustment: default text align is right */
     background: var(--background-light);
     padding: 40px;
     border-radius: 12px;
@@ -210,12 +212,12 @@ body.dark-mode .section-header p {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-mode .video-lesson {
+body.dark-mode .image-lesson {
     background: #2a2a3d;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.video-lesson:hover {
+.image-lesson:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
@@ -239,66 +241,115 @@ body.dark-mode .lesson-text p {
     color: #ccc;
 }
 
-/* Video element is not explicitly styled here to allow the API to control its appearance. 
-   We only use it for grid ordering. */
 
-/* Alternating Layout Logic: Text on Right, Video on Left (Default for odd children in RTL) */
-
-/* Alternating Layout Logic: Text on Left, Video on Right (for even-indexed rows) */
-
-/* The video needs to be moved to the right (order: 2) for even children */
-.video-lesson:nth-child(even) video {
-    order: 2; 
+/* Alternating Layout Logic: Text on Right (default for RTL) */
+.image-lesson:nth-child(odd) { 
+    /* Text on Right (order: 2), Gallery on Left (order: 1) - Default RTL state */
+    /* Set text to right and gallery to left */
+    grid-template-areas: "gallery text";
+}
+.image-lesson:nth-child(odd) .lesson-text {
+    order: 2;
+    text-align: right;
+    grid-area: text;
+}
+.image-lesson:nth-child(odd) > div:not(.lesson-text) {
+    order: 1;
+    grid-area: gallery;
 }
 
-/* The text needs to be moved to the left (order: 1) and aligned left for even children */
-.video-lesson:nth-child(even) .lesson-text {
-    order: 1; 
-    text-align: left;
+
+/* Alternating Layout Logic: Text on Left (for even-indexed rows) */
+.image-lesson:nth-child(even) { 
+    grid-template-areas: "text gallery";
 }
 
-/* Ensure headings/borders adjust for left-aligned text */
-.video-lesson:nth-child(even) .lesson-text h3 {
-    border-left: 3px solid var(--accent-color); /* Added left border for left-aligned text */
+.image-lesson:nth-child(even) .lesson-text {
+    order: 1; /* Move text to the left column */
+    text-align: left; /* RTL Adjustment */
+    grid-area: text;
+}
+
+.image-lesson:nth-child(even) > div:not(.lesson-text) { 
+    order: 2; /* Move gallery to the right column */
+    grid-area: gallery;
+}
+
+
+/* Ensure headings/borders adjust for left-aligned text (even rows in RTL) */
+.image-lesson:nth-child(even) .lesson-text h3 { 
+    border-left: 3px solid var(--accent-color); /* RTL Adjustment: Border on left */
+    border-right: none; /* Clear original border */
     border-bottom: none;
-    padding-left: 5px;
+    padding-right: 0;
+    padding-left: 5px; /* RTL Adjustment */
     margin-bottom: 10px;
-    border-right: none; /* Override default right border from odd items if any */
+}
+/* Ensure headings/borders adjust for right-aligned text (odd rows in RTL) */
+.image-lesson:nth-child(odd) .lesson-text h3 {
+    border-left: none; /* Clear LTR border */
+    border-right: none;
+    border-bottom: 3px solid var(--accent-color);
+    padding-left: 0;
+    padding-right: 0;
 }
 
-/* Media Queries (Adjusted for RTL stacking) */
+
+/* New class for the image/gallery wrapper */
+.image-gallery-container { 
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    padding-top: 56.25%; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the image container itself and apply the custom class */
+.image-gallery-container img {
+    position: absolute;
+    top: 0;
+    right: 0; /* RTL Adjustment: Start from right */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Media Queries */
 @media (max-width: 900px) {
     .logo { font-size: 1.2rem; }
     .section { padding: 80px var(--padding-base); }
     .nav-links { font-size: 0.9rem; }
     .nav-links a { margin: 0 10px; }
     
-    .video-lesson {
+    .image-lesson { 
         grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        grid-template-areas: "text" "gallery" !important;
         padding: 30px 20px;
     }
     
-    /* On mobile, text is always on top (order: 1), aligned right (RTL default) */
-    .video-lesson .lesson-text, 
-    .video-lesson:nth-child(even) .lesson-text {
-        order: 1 !important; 
-        text-align: right !important;
+    .image-lesson .lesson-text {
+        order: 1 !important; /* Text on top */
+        text-align: right !important; /* RTL Adjustment: Text should be right aligned when stacked */
     }
     
-    /* On mobile, video is always below text (order: 2) */
-    .video-lesson video,
-    .video-lesson:nth-child(even) video {
-        order: 2 !important; 
+    .image-lesson > div:not(.lesson-text) { 
+        order: 2 !important; /* Gallery below text */
     }
     
-    /* Restore bottom border for text heading on mobile */
-    .video-lesson .lesson-text h3,
-    .video-lesson:nth-child(even) .lesson-text h3 {
-        border-bottom: 3px solid var(--accent-color);
-        border-left: none !important;
+    /* Reset all alternating text-align and border styles when stacked */
+    .image-lesson .lesson-text h3,
+    .image-lesson:nth-child(even) .lesson-text h3,
+    .image-lesson:nth-child(odd) .lesson-text h3 {
+        border-bottom: 3px solid var(--accent-color) !important;
         border-right: none !important;
-        padding-bottom: 5px;
-        display: inline-block;
+        border-left: none !important;
+        padding-bottom: 5px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        display: inline-block !important;
     }
 }
 

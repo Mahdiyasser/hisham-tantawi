@@ -136,8 +136,7 @@ body {
     content: '';
     position: absolute;
     bottom: -5px;
-    right: 0; /* Changed for RTL */
-    left: auto; /* Changed for RTL */
+    left: 0;
     width: 0;
     height: 2px;
     background: var(--primary-color);
@@ -187,9 +186,9 @@ body.dark-mode .section-header p {
     color: #aaa;
 }
 
-/* --- Videos Page Specific Styles --- */
+/* --- Images Page Specific Styles --- */
 
-.video-lessons-container {
+.image-lessons-container { /* Renamed from .video-lessons-container */
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -197,12 +196,12 @@ body.dark-mode .section-header p {
     gap: 80px; /* Space between each lesson block */
 }
 
-.video-lesson {
+.image-lesson { /* Renamed from .video-lesson */
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns for text and video */
+    grid-template-columns: 1fr 1fr; /* Two equal columns for text and gallery */
     gap: 40px;
     align-items: center;
-    text-align: right; /* Default text alignment for RTL */
+    text-align: left;
     background: var(--background-light);
     padding: 40px;
     border-radius: 12px;
@@ -210,12 +209,12 @@ body.dark-mode .section-header p {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-mode .video-lesson {
+body.dark-mode .image-lesson { /* Renamed from .video-lesson */
     background: #2a2a3d;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.video-lesson:hover {
+.image-lesson:hover { /* Renamed from .video-lesson */
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
@@ -239,64 +238,85 @@ body.dark-mode .lesson-text p {
     color: #ccc;
 }
 
-/* Video element is not explicitly styled here to allow the API to control its appearance. 
-   We only use it for grid ordering. */
 
-/* Alternating Layout Logic: Text on Right, Video on Left (Default for odd children in RTL) */
-
-/* Alternating Layout Logic: Text on Left, Video on Right (for even-indexed rows) */
-
-/* The video needs to be moved to the right (order: 2) for even children */
-.video-lesson:nth-child(even) video {
-    order: 2; 
+/* Alternating Layout Logic: Gallery on Left, Text on Right (for odd-indexed rows) */
+.image-lesson:nth-child(odd) { /* Renamed from .video-lesson */
+    /* Text on Left (order: 1), Gallery on Right (order: 2) - Default state */
+    /* No specific styling needed for the default order */
 }
 
-/* The text needs to be moved to the left (order: 1) and aligned left for even children */
-.video-lesson:nth-child(even) .lesson-text {
-    order: 1; 
-    text-align: left;
+/* Alternating Layout Logic: Gallery on Right, Text on Left (for even-indexed rows) */
+.image-lesson:nth-child(even) .lesson-text { /* Renamed from .video-lesson */
+    order: 2; /* Move text to the right column */
+    text-align: right;
 }
 
-/* Ensure headings/borders adjust for left-aligned text */
-.video-lesson:nth-child(even) .lesson-text h3 {
-    border-left: 3px solid var(--accent-color); /* Added left border for left-aligned text */
+.image-lesson:nth-child(even) .image-gallery-container { /* Renamed from .video-lesson, class added for gallery */
+    order: 1; /* Move gallery to the left column */
+}
+
+/* Ensure headings/borders adjust for right-aligned text */
+.image-lesson:nth-child(even) .lesson-text h3 { /* Renamed from .video-lesson */
+    border-right: 3px solid var(--accent-color);
     border-bottom: none;
-    padding-left: 5px;
+    padding-right: 5px;
     margin-bottom: 10px;
-    border-right: none; /* Override default right border from odd items if any */
+}
+.image-lesson:nth-child(even) .lesson-text h3 { /* Renamed from .video-lesson */
+    border-left: none;
+    border-right: 3px solid var(--accent-color);
 }
 
-/* Media Queries (Adjusted for RTL stacking) */
+/* New class for the image/gallery wrapper */
+.image-gallery-container { 
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    /* 16:9 Aspect Ratio (can be removed if images have their own aspect ratio) */
+    padding-top: 56.25%; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the image container itself and apply the custom class */
+.image-gallery-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Media Queries */
 @media (max-width: 900px) {
     .logo { font-size: 1.2rem; }
     .section { padding: 80px var(--padding-base); }
     .nav-links { font-size: 0.9rem; }
     .nav-links a { margin: 0 10px; }
     
-    .video-lesson {
+    .image-lesson { /* Renamed from .video-lesson */
         grid-template-columns: 1fr; /* Stack columns on smaller screens */
         padding: 30px 20px;
     }
     
-    /* On mobile, text is always on top (order: 1), aligned right (RTL default) */
-    .video-lesson .lesson-text, 
-    .video-lesson:nth-child(even) .lesson-text {
-        order: 1 !important; 
-        text-align: right !important;
+    .image-lesson .lesson-text, /* Renamed from .video-lesson */
+    .image-lesson:nth-child(even) .lesson-text { /* Renamed from .video-lesson */
+        order: 1 !important; /* Text on top */
+        text-align: left;
     }
     
-    /* On mobile, video is always below text (order: 2) */
-    .video-lesson video,
-    .video-lesson:nth-child(even) video {
-        order: 2 !important; 
+    .image-lesson .image-gallery-container, /* Renamed from .video-lesson */
+    .image-lesson:nth-child(even) .image-gallery-container { /* Renamed from .video-lesson */
+        order: 2 !important; /* Gallery below text */
     }
     
-    /* Restore bottom border for text heading on mobile */
-    .video-lesson .lesson-text h3,
-    .video-lesson:nth-child(even) .lesson-text h3 {
+    .image-lesson .lesson-text h3, /* Renamed from .video-lesson */
+    .image-lesson:nth-child(even) .lesson-text h3 { /* Renamed from .video-lesson */
         border-bottom: 3px solid var(--accent-color);
-        border-left: none !important;
-        border-right: none !important;
+        border-right: none;
         padding-bottom: 5px;
         display: inline-block;
     }

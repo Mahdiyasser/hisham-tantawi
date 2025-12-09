@@ -153,7 +153,6 @@ body {
 
 /* General Section Styling */
 .section {
-    padding: 120px var(--padding-base);
     min-height: 80vh; 
     text-align: center;
 }
@@ -168,6 +167,7 @@ body {
 
 .section-header {
     margin-bottom: 60px;
+    margin-top: -100px;
 }
 
 .section-header h2 {
