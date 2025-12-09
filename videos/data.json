@@ -1,0 +1,41 @@
+[
+    {
+        "id": "lesson-1",
+        "title": "Lesson 1: Electrosatics Basics",
+        "summary": "This is a foundational lecture covering the basics of electric charge, the concept of electric fields, and the critical application of Coulomb's Law. Mastering this lesson is absolutely essential for building a strong base in the high school Physics curriculum. We use real-world examples to demystify theoretical concepts.",
+        "coreTopics": [
+            "Charge Quantization",
+            "Electric Field Lines",
+            "Point Chrges",
+            "Superposition Principle"
+        ],
+        "videoUrl": "https:\/\/api.mahdiyasser.site\/payer\/v1\/test.mp4",
+        "thumbnailUrl": "YOUR_THUMBNAIL_URL_7"
+    },
+    {
+        "id": "lesson-2",
+        "title": "Lesson 2: Work-Energy Theorem",
+        "summary": "In this session, we dive into the conservation of mechanical energy and its powerful extension: the Work-Energy Theorem. Learn how to efficiently calculate the work done by various forces and apply the theorem to solve complex dynamics and kinematics problems without relying purely on Newton's laws.",
+        "coreTopics": [
+            "Kinetic Energy",
+            "Potential Energy",
+            "Non-Conservative Forces",
+            "Power Calculation"
+        ],
+        "videoUrl": "YOUR_VIDEO_URL_2.mp4",
+        "thumbnailUrl": "YOUR_THUMBNAIL_URL_2"
+    },
+    {
+        "id": "lesson-3",
+        "title": "Lesson 3: AC Circuits and Capacitors",
+        "summary": "This detailed lecture explores the fascinating world of Alternating Current (AC) circuits. We focus heavily on the unique behavior of capacitors, their impedance, and the crucial phase relationships between voltage and current. Practical applications in electronics are also discussed.",
+        "coreTopics": [
+            "RMS Values",
+            "Capacitive Reactance ($X_C$)",
+            "Phase Angle",
+            "RLC Circuits Introduction"
+        ],
+        "videoUrl": "YOUR_VIDEO_URL_3.mp4",
+        "thumbnailUrl": "YOUR_THUMBNAIL_URL_3"
+    }
+]

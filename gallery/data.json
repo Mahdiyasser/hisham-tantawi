@@ -1,0 +1,43 @@
+[
+    {
+        "id": 1,
+        "title": "Lesson 1: Electrostatics Basics",
+        "description": "This is a foundational lecture covering the basics of electric charge, the concept of electric fields, and the critical application of Coulomb's Law. Mastering this lesson is absolutely essential for building a strong base in the high school Physics curriculum. We use real-world examples to demystify theoretical concepts.",
+        "core_topics": "Charge Quantization, Electric Field Lines, Point Charges, and Superposition Principle.",
+        "images": [
+            "images\/image1.png",
+            "images\/image2.png",
+            "images\/image4.png",
+            "images\/image5.png",
+            "images\/image6.png"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Lesson 2: Work-Energy Theorem",
+        "description": "In this session, we dive into the conservation of mechanical energy and its powerful extension: the Work-Energy Theorem. Learn how to efficiently calculate the work done by various forces and apply the theorem to solve complex dynamics and kinematics problems without relying purely on Newton's laws.",
+        "core_topics": "Kinetic Energy, Potential Energy, Non-Conservative Forces, and Power Calculation.",
+        "images": [
+            "images\/image1.png",
+            "images\/image2.png",
+            "images\/image3.png",
+            "images\/image4.png",
+            "images\/image5.png",
+            "images\/image6.png"
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Lesson 3: AC Circuits and Capacitors",
+        "description": "This detailed lecture explores the fascinating world of Alternating Current (AC) circuits. We focus heavily on the unique behavior of capacitors, their impedance, and the crucial phase relationships between voltage and current. Practical applications in electronics are also discussed.",
+        "core_topics": "RMS Values, Capacitive Reactance ($X_C$), Phase Angle, and RLC Circuits Introduction.",
+        "images": [
+            "images\/image1.png",
+            "images\/image2.png",
+            "images\/image3.png",
+            "images\/image4.png",
+            "images\/image5.png",
+            "images\/image6.png"
+        ]
+    }
+]

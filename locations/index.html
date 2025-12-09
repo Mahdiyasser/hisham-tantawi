@@ -40,38 +40,55 @@
             <p>Find the nearest center to join the 'Newton El-Ghalaba' Physics experience.</p>
         </div>
         
-        <div class="locations-grid">
-            
-            <div class="location-card">
-                <h3>📍 Center - Nasr City</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13813.56515867909!2d31.33924036124707!3d30.05436665780516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e740337c8e9%3A0x60d19207e9f3b5e4!2sNasr%20City%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425553155!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">Located near <strong class="text-strong">El-Sarag Mall</strong>. Classes held every <strong class="text-strong">Sunday and Wednesday</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_NASR_CITY" target="_blank" class="btn location-btn">Contact Nasr City</a>
+        <div class="locations-grid" id="locations-container">
             </div>
-
-            <div class="location-card">
-                <h3>📍 Center - Mohandessin</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13814.970104595697!2d31.1896175612471!3d30.04414675780509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458411d51ab4887%3A0x1d3a4369ff15e744!2sMohandessin%2C%20Giza%20Governorate!5e0!3m2!1sen!2seg!4v1709425712128!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">Across from <strong class="text-strong">B-Tech</strong>. Classes held every <strong class="text-strong">Monday and Thursday</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_MOHANDESSIN" target="_blank" class="btn location-btn">Contact Mohandessin</a>
-            </div>
-
-            <div class="location-card">
-                <h3>📍 Center - Maadi</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13824.288257007616!2d31.23696771124748!3d29.98065475780536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458474254c46569%3A0x8979a9572b212f37!2sMaadi%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425828552!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">In the heart of <strong class="text-strong">Degla</strong>. Classes held every <strong class="text-strong">Tuesday and Friday</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_MAADI" target="_blank" class="btn location-btn">Contact Maadi</a>
-            </div>
-            
-        </div>
     </section>
 
     <script src="../script.js"></script>
+    <script>
+//render-logic-start
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('locations-container');
+            
+            // Function to fetch and render data
+            async function renderLocations() {
+                try {
+                    // Fetch the JSON data
+                    const response = await fetch('./data.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const locations = await response.json();
+
+                    // Loop through the data and create the HTML cards
+                    locations.forEach(location => {
+                        const card = document.createElement('div');
+                        card.classList.add('location-card');
+
+                        card.innerHTML = `
+                            <h3>📍 Center - ${location.name}</h3>
+                            <div class="map-container">
+                                <iframe src="${location.mapUrl}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <p class="map-description">${location.description}. Classes held every <strong class="text-strong">${location.schedule}</strong>.</p>
+                            <a href="${location.contactLink}" target="_blank" class="btn location-btn">Contact ${location.name}</a>
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching or rendering location data:', error);
+                    // Optionally display a user-friendly error message
+                    container.innerHTML = '<p>Could not load teaching locations. Please try again later.</p>';
+                }
+            }
+
+            renderLocations();
+        });
+
+//render-logic-end
+    </script>
 </body>
 </html>

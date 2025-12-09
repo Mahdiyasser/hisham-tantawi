@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,12 +25,12 @@
 
     <div class="nav-wrapper">
         <nav class="nav-links">
-            <a href="#home">الرئيسية</a>
-            <a href="#about">عني</a>
-            <a href="#skills">الخبرات</a>
+            <a href="../#home">الرئيسية</a>
+            <a href="../#about">عني</a>
+            <a href="../#skills">الخبرات</a>
             <a href="../videos">الفيديوهات</a>
             <a href="../gallery">الصور</a>
-            <a href="#contact">تواصل</a>
+            <a href="../#contact">تواصل</a>
         </nav>
     </div>
 
@@ -40,38 +40,61 @@
             <p>اعثر على أقرب مركز لك للانضمام إلى تجربة فيزياء 'نيوتن الغلابة'.</p>
         </div>
         
-        <div class="locations-grid">
-            
-            <div class="location-card">
-                <h3>📍 سنتر - مدينة نصر</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13813.56515867909!2d31.33924036124707!3d30.05436665780516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e740337c8e9%3A0x60d19207e9f3b5e4!2sNasr%20City%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425553155!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">يقع بالقرب من <strong class="text-strong">سراج مول</strong>. تُعقد الفصول كل <strong class="text-strong">أحد وأربعاء</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_NASR_CITY" target="_blank" class="btn location-btn">تواصل مع فرع مدينة نصر</a>
+        <div class="locations-grid" id="locations-container">
             </div>
-
-            <div class="location-card">
-                <h3>📍 سنتر - المهندسين</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13814.970104595697!2d31.1896175612471!3d30.04414675780509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458411d51ab4887%3A0x1d3a4369ff15e744!2sMohandessin%2C%20Giza%20Governorate!5e0!3m2!1sen!2seg!4v1709425712128!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">يقع أمام <strong class="text-strong">بي-تك</strong>. تُعقد الفصول كل <strong class="text-strong">اثنين وخميس</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_MOHANDESSIN" target="_blank" class="btn location-btn">تواصل مع فرع المهندسين</a>
-            </div>
-
-            <div class="location-card">
-                <h3>📍 سنتر - المعادي</h3>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13824.288257007616!2d31.23696771124748!3d29.98065475780536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458474254c46569%3A0x8979a9572b212f37!2sMaadi%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425828552!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <p class="map-description">في قلب <strong class="text-strong">دجلة</strong>. تُعقد الفصول كل <strong class="text-strong">ثلاثاء وجمعة</strong>.</p>
-                <a href="YOUR_WHATSAPP_LINK_FOR_MAADI" target="_blank" class="btn location-btn">تواصل مع فرع المعادي</a>
-            </div>
-            
-        </div>
     </section>
 
     <script src="../script.js"></script>
+    <script>
+//render-logic-start
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('locations-container');
+            
+            // Function to fetch and render data
+            async function renderLocations() {
+                try {
+                    // Fetch the JSON data
+                    const response = await fetch('./data.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const locations = await response.json();
+
+                    // Loop through the data and create the HTML cards
+                    locations.forEach(location => {
+                        const card = document.createElement('div');
+                        card.classList.add('location-card');
+
+                        // Use the primary fields, which now contain the Arabic content
+                        const centerName = location.name;
+                        const descriptionText = location.description; // Contains HTML tags and Arabic text
+                        const scheduleText = location.schedule; // Contains Arabic schedule
+                        const buttonText = `تواصل مع فرع ${centerName}`;
+                        
+                        card.innerHTML = `
+                            <h3>📍 سنتر - ${centerName}</h3>
+                            <div class="map-container">
+                                <iframe src="${location.mapUrl}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                            <p class="map-description">${descriptionText}. تُعقد الفصول كل <strong class="text-strong">${scheduleText}</strong>.</p>
+                            <a href="${location.contactLink}" target="_blank" class="btn location-btn">${buttonText}</a>
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching or rendering location data:', error);
+                    // Optionally display a user-friendly error message
+                    container.innerHTML = '<p>تعذر تحميل بيانات الفروع. يرجى المحاولة مرة أخرى لاحقاً.</p>';
+                }
+            }
+
+            renderLocations();
+        });
+
+//render-logic-end
+    </script>
 </body>
 </html>

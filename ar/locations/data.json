@@ -1,0 +1,23 @@
+[
+    {
+        "name": "مدينة نصر",
+        "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13813.56515867909!2d31.33924036124707!3d30.05436665780516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e740337c8e9%3A0x60d19207e9f3b5e4!2sNasr%20City%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425553155!5m2!1sen!2seg",
+        "description": "يقع بالقرب من <strong class=\"text-strong\">سراج مول</strong>",
+        "schedule": "أحد وأربعاء",
+        "contactLink": "YOUR_WHATSAPP_LINK_FOR_NASR_CITY"
+    },
+    {
+        "name": "المهندسين",
+        "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13814.970104595697!2d31.1896175612471!3d30.04414675780509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458411d51ab4887%3A0x1d3a4369ff15e744!2sMohandessin%2C%20Giza%20Governorate!5e0!3m2!1sen!2seg!4v1709425712128!5m2!1sen!2seg",
+        "description": "يقع أمام <strong class=\"text-strong\">بي-تك</strong>",
+        "schedule": "اثنين وخميس",
+        "contactLink": "YOUR_WHATSAPP_LINK_FOR_MOHANDESSIN"
+    },
+    {
+        "name": "المعادي",
+        "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13824.288257007616!2d31.23696771124748!3d29.98065475780536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458474254c46569%3A0x8979a9572b212f37!2sMaadi%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1709425828552!5m2!1sen!2seg",
+        "description": "في قلب <strong class=\"text-strong\">دجلة</strong>",
+        "schedule": "ثلاثاء وجمعة",
+        "contactLink": "YOUR_WHATSAPP_LINK_FOR_MAADI"
+    }
+]
