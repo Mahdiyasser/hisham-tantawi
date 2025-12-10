@@ -75,6 +75,64 @@
       "url": "https://newton.vetrom.site/"
     }
     </script>
+
+    <!--FOOTER CSS-->
+    <style>
+        /* --- Base Footer Styles --- */
+        .site-footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid #e0e0e0;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            color: #555;
+            background-color: #f7f7f7;
+            line-height: 1.6;
+        }
+        
+        /* Style for the text paragraph */
+        .footer-text {
+            margin: 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Style for the links */
+        .footer-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            word-break: break-word; 
+        }
+        
+        .footer-link:hover,
+        .footer-link:focus {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        
+        /* --- Line Break Control (New Rule) --- */
+        .mobile-break {
+            /* Hide the <br> tag by default (on desktop) */
+            display: none; 
+        }
+        
+        /* --- Mobile Responsiveness (Media Query) --- */
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 20px 15px;
+                font-size: 14px;
+                box-sizing: border-box; 
+            }
+            
+            /* Show the <br> tag on mobile */
+            .mobile-break {
+                display: block; 
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -264,6 +322,28 @@
             </div>
 
         </div>
+
+    <footer class="site-footer" style="margin-bottom:-250px; margin-top:20px;">
+        <p class="footer-text">
+            &copy; 2025. This website was crafted by
+            <br class="mobile-break">
+            <a href="https://mahdiyasser.site" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="footer-link">
+                Mahdi Yasser
+            </a>.
+            <br class="mobile-break">
+            For inquiries, please visit the 
+            <a href="https://mahdiyasser.site/contact" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="footer-link">
+                Contact
+            </a> 
+            page.
+        </p>
+    </footer>
 
     </section>
     <script src="https://api.mahdiyasser.site/gallery/v1/gallery.js"></script>
