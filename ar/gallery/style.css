@@ -1,4 +1,5 @@
 :root {
+    /* Color Variables from main style.css */
     --primary-color: #6a11cb;
     --secondary-color: #2575fc;
     --accent-color: #00bcd4;
@@ -14,6 +15,7 @@
 }
 
 body.dark-mode {
+    /* Dark Mode Variables from main style.css */
     --text-color: #f0f4f7;
     --background-light: #1e1e2e;
     --background-dark: #121212;
@@ -23,12 +25,7 @@ body.dark-mode {
     --glass-shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* RTL Global Styles */
-body {
-    direction: rtl;
-}
-
-
+/* Base Styles (Header, Nav, Body remain unchanged) */
 ::-webkit-scrollbar{
     display: none;
 }
@@ -46,6 +43,9 @@ body {
     color: var(--text-color);
     scroll-behavior: smooth; 
     transition: background-color var(--transition-speed), color var(--transition-speed);
+    
+    /* MANUAL RTL: Global Right Alignment without using direction:rtl */
+    text-align: right; 
 }
 
 .header {
@@ -58,6 +58,9 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: background-color var(--transition-speed);
+    
+    /* MANUAL RTL: Swap Logo and Controls positions */
+    flex-direction: row-reverse; 
 }
 
 .logo {
@@ -94,7 +97,7 @@ body {
 .control-btn:hover {
     background: var(--primary-color);
     color: var(--light-text-color);
-    transform: rotate(15deg);
+    transform: rotate(-15deg); /* Reversed rotation for RTL feel */
     box-shadow: 0 0 15px var(--primary-color);
 }
 
@@ -124,13 +127,16 @@ body {
     display: flex;
     justify-content: center;
     padding: 15px 0;
+    
+    /* MANUAL RTL: Reverse the visual order of links */
+    flex-direction: row-reverse;
 }
 
 .nav-links a {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 600;
-    margin: 0 25px; /* RTL Note: margin-left and margin-right are symmetric */
+    margin: 0 25px;
     transition: color var(--transition-speed);
     position: relative;
 }
@@ -139,7 +145,9 @@ body {
     content: '';
     position: absolute;
     bottom: -5px;
-    right: 0; /* RTL Adjustment: Start from right */
+    /* MANUAL RTL: Animation starts from Right instead of Left */
+    right: 0; 
+    left: auto;
     width: 0;
     height: 2px;
     background: var(--primary-color);
@@ -158,7 +166,7 @@ body {
 .section {
     padding: 120px var(--padding-base);
     min-height: 80vh; 
-    text-align: center;
+    text-align: center; /* Sections stay centered usually */
 }
 
 .section:nth-child(even) {
@@ -204,7 +212,7 @@ body.dark-mode .section-header p {
     grid-template-columns: 1fr 1fr; 
     gap: 40px;
     align-items: center;
-    text-align: right; /* RTL Adjustment: default text align is right */
+    text-align: right; /* Ensure text inside lessons is right-aligned */
     background: var(--background-light);
     padding: 40px;
     border-radius: 12px;
@@ -242,58 +250,46 @@ body.dark-mode .lesson-text p {
 }
 
 
-/* Alternating Layout Logic: Text on Right (default for RTL) */
-.image-lesson:nth-child(odd) { 
-    /* Text on Right (order: 2), Gallery on Left (order: 1) - Default RTL state */
-    /* Set text to right and gallery to left */
-    grid-template-areas: "gallery text";
-}
-.image-lesson:nth-child(odd) .lesson-text {
-    order: 2;
-    text-align: right;
-    grid-area: text;
-}
-.image-lesson:nth-child(odd) > div:not(.lesson-text) {
-    order: 1;
-    grid-area: gallery;
+/* MANUAL RTL LAYOUT LOGIC:
+   Goal: Image Right -> Image Left -> Image Right 
+*/
+
+/* ODD ROWS (1, 3, 5...): 
+   Structure: [Text | Image] 
+   Result: Image is on the RIGHT. Text is on the LEFT. 
+   This matches the "Start Right" requirement.
+*/
+.image-lesson:nth-child(odd) {
+   /* Default Grid Order (Text is col 1, Image is col 2).
+      No changes needed for positioning. 
+      Text is naturally on Left, Image naturally on Right.
+   */
 }
 
-
-/* Alternating Layout Logic: Text on Left (for even-indexed rows) */
-.image-lesson:nth-child(even) { 
-    grid-template-areas: "text gallery";
-}
-
+/* EVEN ROWS (2, 4, 6...):
+   Structure: [Image | Text]
+   Result: Image is on the LEFT. Text is on the RIGHT.
+   This matches the "Then Left" requirement.
+*/
 .image-lesson:nth-child(even) .lesson-text {
-    order: 1; /* Move text to the left column */
-    text-align: left; /* RTL Adjustment */
-    grid-area: text;
+    order: 2; /* Move text to the right column */
+    /* Text alignment is already right from body/parent */
 }
 
-.image-lesson:nth-child(even) > div:not(.lesson-text) { 
-    order: 2; /* Move gallery to the right column */
-    grid-area: gallery;
+.image-lesson:nth-child(even) .image-gallery-container {
+    order: 1; /* Move gallery to the left column */
 }
 
-
-/* Ensure headings/borders adjust for left-aligned text (even rows in RTL) */
-.image-lesson:nth-child(even) .lesson-text h3 { 
-    border-left: 3px solid var(--accent-color); /* RTL Adjustment: Border on left */
-    border-right: none; /* Clear original border */
+/* Border Adjustment for Even Rows (Text on Right) */
+.image-lesson:nth-child(even) .lesson-text h3 {
+    /* Manual RTL: The "inner" border is now on the LEFT side */
+    border-left: 3px solid var(--accent-color);
+    border-right: none;
     border-bottom: none;
+    padding-left: 5px;
     padding-right: 0;
-    padding-left: 5px; /* RTL Adjustment */
     margin-bottom: 10px;
 }
-/* Ensure headings/borders adjust for right-aligned text (odd rows in RTL) */
-.image-lesson:nth-child(odd) .lesson-text h3 {
-    border-left: none; /* Clear LTR border */
-    border-right: none;
-    border-bottom: 3px solid var(--accent-color);
-    padding-left: 0;
-    padding-right: 0;
-}
-
 
 /* New class for the image/gallery wrapper */
 .image-gallery-container { 
@@ -309,7 +305,7 @@ body.dark-mode .lesson-text p {
 .image-gallery-container img {
     position: absolute;
     top: 0;
-    right: 0; /* RTL Adjustment: Start from right */
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -324,32 +320,30 @@ body.dark-mode .lesson-text p {
     .nav-links { font-size: 0.9rem; }
     .nav-links a { margin: 0 10px; }
     
-    .image-lesson { 
+    .image-lesson {
         grid-template-columns: 1fr; /* Stack columns on smaller screens */
-        grid-template-areas: "text" "gallery" !important;
         padding: 30px 20px;
     }
     
-    .image-lesson .lesson-text {
-        order: 1 !important; /* Text on top */
-        text-align: right !important; /* RTL Adjustment: Text should be right aligned when stacked */
+    /* On Mobile: Keep Text on Top, Image on Bottom for ALL rows */
+    .image-lesson .lesson-text,
+    .image-lesson:nth-child(even) .lesson-text {
+        order: 1 !important; 
+        text-align: right; /* Manual RTL alignment on mobile */
     }
     
-    .image-lesson > div:not(.lesson-text) { 
-        order: 2 !important; /* Gallery below text */
+    .image-lesson .image-gallery-container,
+    .image-lesson:nth-child(even) .image-gallery-container {
+        order: 2 !important; 
     }
     
-    /* Reset all alternating text-align and border styles when stacked */
     .image-lesson .lesson-text h3,
-    .image-lesson:nth-child(even) .lesson-text h3,
-    .image-lesson:nth-child(odd) .lesson-text h3 {
-        border-bottom: 3px solid var(--accent-color) !important;
-        border-right: none !important;
-        border-left: none !important;
-        padding-bottom: 5px !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        display: inline-block !important;
+    .image-lesson:nth-child(even) .lesson-text h3 {
+        border-bottom: 3px solid var(--accent-color);
+        border-right: none;
+        border-left: none;
+        padding-bottom: 5px;
+        display: inline-block;
     }
 }
 
